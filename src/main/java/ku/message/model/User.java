@@ -2,18 +2,20 @@ package ku.message.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.time.Instant;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Entity
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(generator = "UUID")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     private String username;
     private String password;
@@ -22,6 +24,6 @@ public class User {
     private String LastName;
 
     private String role;
-
+    private Instant createdAt;
 
 }

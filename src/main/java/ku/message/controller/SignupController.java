@@ -1,5 +1,6 @@
 package ku.message.controller;
 
+import ku.message.dto.SignupDto;
 import ku.message.model.User;
 import ku.message.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +18,20 @@ public class SignupController {
     @Autowired
     private UserService userService;
 
-    @GetMapping()
+    @GetMapping
     public String signupView() {
         return "signup";
     }
 
-    @PostMapping()
-    public String signupUser(@ModelAttribute User user, Model model) {
+    @PostMapping
+    public String signupUser(@ModelAttribute SignupDto user, Model model) {
         String signupError = null;
 
-        if (!userService.isUsernameAvailable(user.getUsername())) {
+        if (!userService.isUsernameAvailable(user.getUsername()))
             signupError = "The username already exists.";
-        }
 
         if (signupError == null) {
-            int rowsAdded = userService.createUser(user);
-            if (rowsAdded < 0) {
-                signupError = "There was an error signing you up. Please try again.";
-            }
-        }
-
-        if (signupError == null) {
+            userService.createUser(user);
             model.addAttribute("signupSuccess", true);
         } else {
             model.addAttribute("signupError", signupError);
@@ -45,5 +39,5 @@ public class SignupController {
 
         return "signup";
     }
-
 }
+
