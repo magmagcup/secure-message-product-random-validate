@@ -23,6 +23,7 @@ public class User {
     private String firstName;
     private String LastName;
 
+    private String email;
     private String role;
     private Instant createdAt;
 
